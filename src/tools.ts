@@ -28,8 +28,10 @@ type TIpData = {
   "isp": string,
   "org": string,
   "as": string,
-  "query": "113.118.104.11"
+  "query": "113.118.104.11",
+  "msg"?: string,
 }
+
 
 // isp Chinanet / China Mobile Communications Corporation / China Unicom Henan Province network  / China TieTong Telecommunications Corporation  / China Education and Research Network Center
 
@@ -59,7 +61,7 @@ export async function ipSearch(ip: string, fetch: any) {
 
   const isIP = checkIP(ip);
 
-  if (!isIP) return null;
+  if (!isIP) return { status: 'fail', msg: 'IP 地址格式错误' } as TIpData;
 
   try {
     const response = await fetch(`https://demo.ip-api.com/json/${ip}?lang=zh-CN`, {
@@ -94,7 +96,10 @@ export async function ipSearch(ip: string, fetch: any) {
     return data;
 
   } catch (e) {
-    console.log(e)
-    return null
+    // console.log(e)
+    return {
+      status: 'fail',
+      msg: '请求失败',
+    } as TIpData
   }
 }

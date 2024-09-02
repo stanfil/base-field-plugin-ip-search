@@ -77,11 +77,14 @@ basekit.addField({
 
       const result = await ipSearch(text, context.fetch);
 
+      // console.log('result', result);
+
       if (!result || result.status !== 'success') {
         return {
           code: FieldCode.Success,
           data: {
             id: `${Math.random()}`,
+            ipLocation: result?.msg || '未知错误',
           }
         }
       }
